@@ -12,26 +12,30 @@ export const dijkstras = async (
   graph,
   diameter,
   animationSpeed,
-  onUpdateVisited
+  onUpdateVisited,
+  visualizeSteps = true
 ) => {
   const isInsideGrid = (row, col) =>
     row >= 0 && col >= 0 && row < diameter && col < diameter;
 
-  const sleep = () => {
-    return new Promise((resolve) => setTimeout(resolve, 100 - animationSpeed));
+  const sleep = async () => {
+    if (visualizeSteps) {
+      return new Promise((resolve) =>
+        setTimeout(resolve, 100 - animationSpeed)
+      );
+    }
   };
 
-  let distances = Array(diameter)
-    .fill(Infinity)
-    .map(() => Array(diameter).fill(Infinity));
-  let visited = Array(diameter)
-    .fill(false)
-    .map(() => Array(diameter).fill(false));
+  const distances = Array.from({ length: diameter }, () =>
+    Array(diameter).fill(Infinity)
+  );
+  const visited = Array.from({ length: diameter }, () =>
+    Array(diameter).fill(false)
+  );
 
   const start = { row: 0, col: 0 };
   const target = { row: diameter - 1, col: diameter - 1 };
   distances[start.row][start.col] = 0;
-  let prevNodeMap = {};
 
   const neighbors = [
     [1, 0],
@@ -40,12 +44,12 @@ export const dijkstras = async (
     [0, -1],
   ];
 
+  let prevNodeMap = {};
+
   const priorityQueue = new Heap((a, b) => a.distance - b.distance);
   priorityQueue.push(new Node(start.row, start.col, 0));
 
   while (!priorityQueue.empty()) {
-    await sleep();
-
     const currentNode = priorityQueue.pop();
 
     if (visited[currentNode.row][currentNode.col]) continue;
@@ -55,11 +59,12 @@ export const dijkstras = async (
     }
 
     visited[currentNode.row][currentNode.col] = true;
-    await onUpdateVisited(currentNode.row, currentNode.col);
+    if (visualizeSteps) {
+      await onUpdateVisited(currentNode.row, currentNode.col);
+    }
     await sleep();
 
-    for (let i = 0; i < neighbors.length; i++) {
-      const [dx, dy] = neighbors[i];
+    for (let [dx, dy] of neighbors) {
       const newRow = currentNode.row + dx;
       const newCol = currentNode.col + dy;
 
@@ -76,16 +81,15 @@ export const dijkstras = async (
   }
 
   const backtrackShortestPath = (distances, prevNodeMap) => {
-    let currentNode = { row: diameter - 1, col: diameter - 1 };
+    let currentNode = target;
     const path = [];
     while (currentNode && (currentNode.row !== 0 || currentNode.col !== 0)) {
       path.push(currentNode);
       currentNode = prevNodeMap[`${currentNode.row},${currentNode.col}`];
     }
-    path.push({ row: 0, col: 0 });
+    path.push(start);
     return path;
   };
 
-  const shortestPath = backtrackShortestPath(distances, prevNodeMap);
-  return shortestPath;
+  return backtrackShortestPath(distances, prevNodeMap);
 };
