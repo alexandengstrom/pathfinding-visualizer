@@ -84,19 +84,20 @@ body {
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: all 0.5s ease-in-out;
-  animation: pulse 1.5s infinite, shadowPulse 1.5s infinite;
 }
 
 .visited-indicator {
   background: linear-gradient(135deg, #9b30ff, #d074ff);
   box-shadow: 0 0 10px 2px rgba(155, 48, 255, 0.3);
-  animation: fadeToOriginalColor 0.5s forwards, pulse 1.5s infinite,
+  animation: fadeToOriginalPurple 0.5s forwards, pulse 1.5s infinite,
     shadowPulse 1.5s infinite, scaleDown 0.5s forwards;
 }
 
 .shortest-path-indicator {
   background: linear-gradient(135deg, #247afd, #408cfd);
   box-shadow: 0 0 10px 2px rgba(36, 122, 253, 0.3);
+  animation: fadeToOriginalBlue 0.5s forwards, pulse 1.5s infinite,
+    shadowPulse 1.5s infinite, scaleDown 0.5s forwards;
 }
 
 button {
@@ -130,6 +131,7 @@ button:disabled:hover {
   display: flex;
   width: calc(100vw / 2);
   margin: auto;
+  max-width: 800px;
 }
 
 .control-panel {
@@ -141,6 +143,7 @@ button:disabled:hover {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: auto;
+  max-width: 800px;
 }
 
 .slider-container label {
@@ -251,7 +254,7 @@ button:disabled:hover {
   }
 }
 
-@keyframes fadeToOriginalColor {
+@keyframes fadeToOriginalPurple {
   0% {
     background: linear-gradient(135deg, #5a108c, #a04dc7);
   }
@@ -266,6 +269,24 @@ button:disabled:hover {
   }
   100% {
     background: linear-gradient(135deg, #9b30ff, #d074ff);
+  }
+}
+
+@keyframes fadeToOriginalBlue {
+  0% {
+    background: linear-gradient(135deg, #003366, #004c99);
+  }
+  25% {
+    background: linear-gradient(135deg, #004080, #0055b5);
+  }
+  50% {
+    background: linear-gradient(135deg, #00509e, #0066cc);
+  }
+  75% {
+    background: linear-gradient(135deg, #0060b6, #0077e6);
+  }
+  100% {
+    background: linear-gradient(135deg, #247afd, #408cfd);
   }
 }
 

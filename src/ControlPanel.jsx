@@ -1,12 +1,4 @@
-import {
-  DARK_RED,
-  LIGHT_GREEN,
-  LIGHT_RED,
-  ORANGE,
-  YELLOW,
-  BLACK,
-  colors,
-} from "./colors";
+import { colors } from "./colors";
 import { colorToCostMapping } from "./colors";
 
 function ControlPanel({
