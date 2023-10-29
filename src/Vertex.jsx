@@ -1,10 +1,11 @@
-function Vertex({ color, onClick, isVisited, isOnShortestPath }) {
+function Vertex({ id, color, onClick, isVisited, isOnShortestPath }) {
   const handleClick = () => {
     onClick && onClick();
   };
 
   return (
     <div
+      id={id}
       className="grid-item"
       style={{ backgroundColor: color }}
       onClick={handleClick}

@@ -14,6 +14,7 @@ function Graph({
       {Array.from({ length: diameter * diameter }).map((_, index) => {
         const row = Math.floor(index / diameter);
         const col = index % diameter;
+        const vertexId = `row${row}col${col}`;
         const vertexColor = graph[row] && costToColorMapping[graph[row][col]];
         const isVisited = visitedNodes[row] && visitedNodes[row][col];
         const isOnShortestPath =
@@ -21,7 +22,8 @@ function Graph({
 
         return (
           <Vertex
-            key={index}
+            key={vertexId}
+            id={vertexId}
             color={vertexColor}
             isVisited={isVisited}
             isOnShortestPath={isOnShortestPath}
