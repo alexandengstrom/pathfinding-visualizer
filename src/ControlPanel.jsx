@@ -45,8 +45,8 @@ function ControlPanel({
           <input
             type="range"
             id="diameter-slider"
-            min="15"
-            max="35"
+            min="9"
+            max="21"
             step="2"
             value={diameter}
             onChange={(e) => onDiameterChange(Number(e.target.value))}

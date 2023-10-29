@@ -1,11 +1,11 @@
 # Pathfinding Visualizer
 
-Welcome to the Pathfinding Visualizer! This tool was built using React and is designed to help you visualize different pathfinding algorithms in action. Whether you're learning about these algorithms for the first time or just want to see them in action, this visualizer provides a comprehensive and interactive platform.
+The Pathfinding Visualizer is a web-based tool developed in React. Its primary function is to provide visual representations of various pathfinding algorithms, allowing users to observe their operations in real-time.
 
 Try the tool here:
 https://alexandengstrom.github.io/pathfinding-visualizer/
 
-## Features
+## Features:
 
 1. **Algorithms:**
 

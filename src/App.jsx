@@ -17,7 +17,7 @@ import {
 } from "./colors";
 
 function App() {
-  const INITIAL_DIAMETER = 25;
+  const INITIAL_DIAMETER = 15;
 
   const [diameter, setDiameter] = useState(INITIAL_DIAMETER);
   const [gridStyle, setGridstyle] = useState();
@@ -141,11 +141,11 @@ function App() {
         <button disabled={animationRunning} onClick={executeDijkstra}>
           Dijkstra's Algorithm
         </button>
-        <button disabled={animationRunning} onClick={executeBFS}>
-          Breadth First Search
-        </button>
         <button disabled={animationRunning} onClick={executeDFS}>
           Depth First Search
+        </button>
+        <button disabled={animationRunning} onClick={executeBFS}>
+          Breadth First Search
         </button>
         <Graph
           diameter={diameter}
@@ -156,6 +156,69 @@ function App() {
           handleVertexClick={handleVertexClick}
           setGridStyle={setGridstyle}
         />
+        <div className="algorithm-info-container">
+          <div className="algorithm-info">
+            <h3>Dijkstra's Algorithm</h3>
+            <p>
+              Dijkstra's Algorithm is a graph search algorithm that finds the
+              shortest path between a given source vertex and all other vertices
+              in a weighted graph. It builds the path incrementally, favoring
+              the nearest neighboring vertices first. The algorithm guarantees
+              the shortest path for a graph with non-negative edge weights. In
+              this visualization tool, you should choose "Create terrain" to
+              craft a weighted graph. Without varying costs associated with
+              reaching a node, Dijkstra's will perform identically to BFS.
+            </p>
+            <a
+              className="info-link"
+              href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"
+            >
+              Wikipedia
+            </a>
+          </div>
+
+          <div className="algorithm-info">
+            <h3>Depth-First Search (DFS):</h3>
+            <p>
+              DFS, or Depth-First Search, is a graph traversal algorithm that
+              delves as far as possible along a branch before backtracking. From
+              the initial vertex, it ventures deeper into the graph by visiting
+              unexplored vertices and recursively diving further. While DFS
+              doesn't guarantee the shortest path, it's instrumental in
+              detecting cycles, classifying edges, and determining other graph
+              properties. For an optimal visualization experience with DFS, opt
+              for the "Create maze" option, as this algorithm cannot process
+              weighted graphs effectively.
+            </p>
+            <a
+              className="info-link"
+              href="https://en.wikipedia.org/wiki/Depth-first_search"
+            >
+              Wikipedia
+            </a>
+          </div>
+
+          <div className="algorithm-info">
+            <h3>Breadth-First Search (BFS):</h3>
+            <p>
+              BFS, or Breadth-First Search, is a graph traversal algorithm that
+              sequentially explores neighboring vertices based on their depth.
+              Beginning from the source vertex, it evaluates all immediate
+              neighbors before progressing to their respective neighbors, and so
+              on. Notably, BFS assures the shortest path in unweighted graphs
+              and serves to determine distances and identify cycles. For an
+              insightful visualization of BFS in action, it's recommended to
+              choose the "Create maze" option, especially since edge weights
+              don't influence the BFS traversal pattern.
+            </p>
+            <a
+              className="info-link"
+              href="https://en.wikipedia.org/wiki/Breadth-first_search"
+            >
+              Wikipedia
+            </a>
+          </div>
+        </div>
         <div className="footer">
           Designed and Developed by Alexander Engström, 2023
         </div>
