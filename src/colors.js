@@ -1,5 +1,4 @@
 export const LIGHT_GREEN = "#90EE90";
-export const MIL_GREEN = "#ACB334";
 export const YELLOW = "#FAB733";
 export const ORANGE = "#FF8E15";
 export const LIGHT_RED = "#FF4E11";
@@ -8,19 +7,10 @@ export const BLACK = "#000000";
 export const START_COLOR = "#247AFD";
 export const FINISH_COLOR = "#247AFD";
 
-export const colors = [
-  LIGHT_GREEN,
-  MIL_GREEN,
-  YELLOW,
-  ORANGE,
-  LIGHT_RED,
-  DARK_RED,
-  BLACK,
-];
+export const colors = [LIGHT_GREEN, YELLOW, ORANGE, LIGHT_RED, DARK_RED, BLACK];
 
 export const colorToCostMapping = {
   "#90EE90": 1,
-  "#ACB334": 3,
   "#FAB733": 5,
   "#FF8E15": 7,
   "#FF4E11": 10,
@@ -32,7 +22,6 @@ export const colorToCostMapping = {
 
 export const costToColorMapping = {
   1: "#90EE90",
-  3: "#ACB334",
   5: "#FAB733",
   7: "#FF8E15",
   10: "#FF4E11",

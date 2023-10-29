@@ -1,11 +1,11 @@
 import {
   DARK_RED,
   LIGHT_GREEN,
-  MIL_GREEN,
   LIGHT_RED,
   ORANGE,
   YELLOW,
   BLACK,
+  colors,
 } from "./colors";
 import { colorToCostMapping } from "./colors";
 
@@ -21,16 +21,6 @@ function ControlPanel({
   onGenerateTerrain,
   animationRunning,
 }) {
-  const colors = [
-    LIGHT_GREEN,
-    MIL_GREEN,
-    YELLOW,
-    ORANGE,
-    LIGHT_RED,
-    DARK_RED,
-    BLACK,
-  ];
-
   return (
     <div className="control-panel-container">
       <div className="control-panel">
