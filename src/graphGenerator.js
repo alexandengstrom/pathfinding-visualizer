@@ -18,37 +18,29 @@ export const generateMaze = (diameter, setShortestPathNodes, setGraph) => {
   const initialPath = Array(diameter)
     .fill(false)
     .map(() => Array(diameter).fill(false));
+
   setShortestPathNodes(initialPath);
 
   const isCellValid = (x, y) =>
     x >= 0 && y >= 0 && x < diameter && y < diameter;
 
   const getUnvisitedNeighbors = (x, y) => {
-    const dirs = [
+    const directions = [
       [0, 2],
       [2, 0],
       [0, -2],
       [-2, 0],
     ];
-    const neighbors = [];
-    for (let dir of dirs) {
-      const newX = x + dir[0];
-      const newY = y + dir[1];
-      if (
-        isCellValid(newX, newY) &&
-        newGraph[newY][newX] === colorToCostMapping[BLACK]
-      ) {
-        neighbors.push([newX, newY]);
-      }
-    }
-    return neighbors;
+    return directions
+      .map((dir) => [x + dir[0], y + dir[1]])
+      .filter(
+        ([nx, ny]) =>
+          isCellValid(nx, ny) && newGraph[ny][nx] === colorToCostMapping[BLACK]
+      );
   };
 
-  const stack = [];
-  const startX = 0;
-  const startY = 0;
-  newGraph[startY][startX] = colorToCostMapping[LIGHT_GREEN];
-  stack.push([startX, startY]);
+  const stack = [[0, 0]];
+  newGraph[0][0] = colorToCostMapping[LIGHT_GREEN];
 
   while (stack.length > 0) {
     const [x, y] = stack[stack.length - 1];
@@ -57,20 +49,17 @@ export const generateMaze = (diameter, setShortestPathNodes, setGraph) => {
     if (neighbors.length === 0) {
       stack.pop();
     } else {
-      const randomNeighborIndex = Math.floor(Math.random() * neighbors.length);
-      const [nx, ny] = neighbors[randomNeighborIndex];
+      const [nx, ny] = neighbors[Math.floor(Math.random() * neighbors.length)];
 
       newGraph[y + (ny - y) / 2][x + (nx - x) / 2] =
         colorToCostMapping[LIGHT_GREEN];
       newGraph[ny][nx] = colorToCostMapping[LIGHT_GREEN];
-
       stack.push([nx, ny]);
     }
   }
 
   newGraph[0][0] = colorToCostMapping[START_COLOR];
   newGraph[diameter - 1][diameter - 1] = colorToCostMapping[FINISH_COLOR];
-
   setGraph(newGraph);
 };
 
@@ -82,23 +71,20 @@ export const generateHeatmap = (diameter, setShortestPathNodes, setGraph) => {
   const initialPath = Array(diameter)
     .fill(false)
     .map(() => Array(diameter).fill(false));
+
   setShortestPathNodes(initialPath);
 
-  const numberOfClusters = Math.floor(Math.random() * (diameter / 2) + 5);
+  const clusterCount = Math.floor(Math.random() * (diameter / 2) + 5);
+  const minDistance = diameter / 6;
 
-  const safeDistance = diameter / 6;
-
-  for (let i = 0; i < numberOfClusters; i++) {
+  for (let i = 0; i < clusterCount; i++) {
     let x, y;
-
     do {
       x = Math.floor(Math.random() * diameter);
       y = Math.floor(Math.random() * diameter);
     } while (
-      Math.sqrt(x * x + y * y) < safeDistance ||
-      Math.sqrt(
-        (diameter - x) * (diameter - x) + (diameter - y) * (diameter - y)
-      ) < safeDistance
+      Math.sqrt(x * x + y * y) < minDistance ||
+      Math.sqrt((diameter - x) ** 2 + (diameter - y) ** 2) < minDistance
     );
 
     const clusterRadius = Math.floor(Math.random() * (diameter / 5) + 2);
@@ -107,18 +93,15 @@ export const generateHeatmap = (diameter, setShortestPathNodes, setGraph) => {
       for (let dy = -clusterRadius; dy <= clusterRadius; dy++) {
         const nx = x + dx;
         const ny = y + dy;
-        if (nx >= 0 && ny >= 0 && nx < diameter && ny < diameter) {
-          const distanceToCenter = Math.sqrt(dx * dx + dy * dy);
+        const distanceToCenter = Math.sqrt(dx * dx + dy * dy);
 
-          if (distanceToCenter <= clusterRadius / 4) {
-            terrain[ny][nx] = DARK_RED;
-          } else if (distanceToCenter <= (2 * clusterRadius) / 4) {
+        if (nx >= 0 && ny >= 0 && nx < diameter && ny < diameter) {
+          if (distanceToCenter <= clusterRadius / 4) terrain[ny][nx] = DARK_RED;
+          else if (distanceToCenter <= (2 * clusterRadius) / 4)
             terrain[ny][nx] = LIGHT_RED;
-          } else if (distanceToCenter <= (3 * clusterRadius) / 4) {
+          else if (distanceToCenter <= (3 * clusterRadius) / 4)
             terrain[ny][nx] = ORANGE;
-          } else if (distanceToCenter < clusterRadius) {
-            terrain[ny][nx] = YELLOW;
-          }
+          else if (distanceToCenter < clusterRadius) terrain[ny][nx] = YELLOW;
         }
       }
     }
@@ -127,7 +110,6 @@ export const generateHeatmap = (diameter, setShortestPathNodes, setGraph) => {
   const terrainCosts = terrain.map((row) =>
     row.map((color) => colorToCostMapping[color])
   );
-
   terrainCosts[0][0] = colorToCostMapping[START_COLOR];
   terrainCosts[diameter - 1][diameter - 1] = colorToCostMapping[FINISH_COLOR];
 
@@ -143,13 +125,13 @@ export const resetGraph = (diameter, setShortestPathNodes, setGraph) => {
   initialGraph[0][0] = colorToCostMapping[START_COLOR];
   initialGraph[diameter - 1][diameter - 1] = colorToCostMapping[FINISH_COLOR];
 
-  const initialVisited = Array(diameter)
+  const initialVisitedNodes = Array(diameter)
     .fill(false)
     .map(() => Array(diameter).fill(false));
-  setVisitedNodes(initialVisited);
 
   const initialPath = Array(diameter)
     .fill(false)
     .map(() => Array(diameter).fill(false));
+
   setShortestPathNodes(initialPath);
 };
