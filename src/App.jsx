@@ -158,7 +158,7 @@ function App() {
         />
         <div className="algorithm-info-container">
           <div className="algorithm-info">
-            <h3>Dijkstra's Algorithm</h3>
+            <h3>Dijkstra's Algorithm:</h3>
             <p>
               Dijkstra's Algorithm is a graph search algorithm that finds the
               shortest path between a given source vertex and all other vertices
